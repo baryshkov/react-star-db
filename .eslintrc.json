@@ -6,7 +6,9 @@
     "extends": [
         "airbnb",
         "prettier",
-        "prettier/react"
+        "prettier/react",
+        "plugin:fp/recommended",
+        "plugin:react/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -22,7 +24,8 @@
     },
     "plugins": [
         "react",
-        "prettier"
+        "prettier",
+        "fp"
     ],
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
