@@ -1,0 +1,15 @@
+header {
+  /*background-color: #242424;*/
+  color: white;
+}
+/*.bgc {*/
+/*  background-color: purple;*/
+/*}*/
+/*.bgc-2 {*/
+/*  background-color: orangered;*/
+/*}*/
+
+.container {
+  width: 976px;
+  margin: 0 auto;
+}
