@@ -1,19 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import './Header.css';
 
 const Header = styled.header`
-  background-color: #242424;
+  //background-color: #242424;
+  //margin: 0 2rem;
 `;
 
 const NavBar = styled.ul`
   list-style: none;
   align-items: center;
+  padding-left: 0;
 `;
 
 const NavLink = styled.a`
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   padding: 0.5rem;
   color: green;
   text-decoration: none;
@@ -28,11 +28,11 @@ const NavLink = styled.a`
 const AppHeader = () => {
   return (
     <Header>
-      <div className="row container">
-        <div className="col-xs-12 col-sm-6 col-md-6 bgc">
+      <div className="row between-sm container">
+        <div className="col-xs-12 col-sm-4 col-md-3">
           <h1>Star DB</h1>
         </div>
-        <nav className="col-xs-12 col-sm-6 col-md-6 bgc-2 row">
+        <nav className="col-xs-12 col-sm-8 col-md-6 col-lg-4 row">
           <NavBar className="row">
             <li>
               <NavLink href="#">People</NavLink>

@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather+Sans&display=swap');
+
 body {
-  font-family: 'Lora', serif;
+  font-family: 'Merriweather Sans', sans-serif;
   font-size: 16px;
   color: white;
   background-color: #242424;
@@ -15,13 +17,13 @@ h6 {
 }
 
 .container {
-  width: 976px;
+  max-width: 976px;
   margin: 0 auto;
 }
 
 @media only screen and (min-width: 1200px) {
-  .container {
-    width: 1200px;
-    margin: 0 auto;
-  }
+  /*.container {*/
+  /*  max-width: 1100px;*/
+  /*  margin: 0 auto;*/
+  /*}*/
 }
