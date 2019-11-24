@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import BaseList from '../BaseList/BaseList';
+import SwapiService from '../../services/swapiService';
 
 const PlanetImg = styled.img`
-  width: 150px;
-  height: 150px;
+  height: 260px;
   border-radius: 10px;
   margin-right: 1rem;
 `;
@@ -31,37 +31,62 @@ const PIheading = styled.h4`
 `;
 
 class RandomPlanet extends Component {
+  swapiService = new SwapiService();
+
+  state = {
+    id: null,
+    name: null,
+    population: null,
+    rotationPeriod: null,
+    diameter: null,
+  };
+
+  constructor(props) {
+    super(props);
+    this.updatePlanet();
+  }
+
+  onPlanetLoad = planet => {
+    this.setState(planet);
+  };
+
+  updatePlanet = () => {
+    const id = Math.floor(Math.random() * 20 + 1);
+    this.swapiService.getPlanet(id).then(this.onPlanetLoad);
+  };
+
   render() {
+    const { id, name, population, rotationPeriod, diameter } = this.state;
     return (
       <div className="container">
         <PlanetSection>
           <div className="row start-sm">
-            <div className="col-xs-4 col-sm-4 col-md-4 col-lg-2">
+            <div className="col-xs-5 col-md-6 col-lg-5">
               <PlanetImg
                 className="planet-image"
-                src="https://vignette.wikia.nocookie.net/starwars/images/9/99/Yavin-Battlefront.png"
+                src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
               />
             </div>
 
-            <div className="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-              <Heading>Planet Name</Heading>
+            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+              <Heading>{name}</Heading>
               <BaseList>
                 <li>
                   <PlanetDataContainer>
                     <PIheading>Population</PIheading>
-                    <div>123124</div>
+                    <div>{population}</div>
                   </PlanetDataContainer>
                 </li>
                 <li>
                   <PlanetDataContainer>
                     <PIheading>Rotation Period</PIheading>
-                    <div>43</div>
+                    <div>{rotationPeriod}</div>
                   </PlanetDataContainer>
                 </li>
                 <li>
                   <PlanetDataContainer>
                     <PIheading>Diameter</PIheading>
-                    <div>100</div>
+                    <div>{diameter}</div>
                   </PlanetDataContainer>
                 </li>
               </BaseList>

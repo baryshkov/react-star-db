@@ -8,13 +8,11 @@ const List = styled(BaseList)`
 
 const ItemList = () => {
   return (
-    <div className="col-xs-12 col-md-6">
-      <List>
-        <li>Luke Skywalker</li>
-        <li>Anakin Skywalker</li>
-        <li>Dart Vader</li>
-      </List>
-    </div>
+    <List>
+      <li>Luke Skywalker</li>
+      <li>Anakin Skywalker</li>
+      <li>Dart Vader</li>
+    </List>
   );
 };
 
