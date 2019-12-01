@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import BaseList from '../BaseList/BaseList';
 import SwapiService from '../../services/swapiService';
+import Spinner from '../Spinner';
+import ErrorIndicator from '../ErrorIndicator';
 
 const PlanetImg = styled.img`
   height: 260px;
@@ -31,71 +33,86 @@ const PIheading = styled.h4`
 `;
 
 class RandomPlanet extends Component {
-  swapiService = new SwapiService();
-
   state = {
-    id: null,
-    name: null,
-    population: null,
-    rotationPeriod: null,
-    diameter: null,
+    planet: {},
+    loading: true,
+    error: false,
   };
 
-  constructor(props) {
-    super(props);
+  swapiService = new SwapiService();
+
+  componentDidMount() {
     this.updatePlanet();
+    this.interval = setInterval(this.updatePlanet, 5000);
   }
 
   onPlanetLoad = planet => {
-    this.setState(planet);
+    const loading = false;
+    this.setState({ planet, loading });
+  };
+
+  onError = () => {
+    this.setState({ error: true, loading: false });
   };
 
   updatePlanet = () => {
-    const id = Math.floor(Math.random() * 20 + 1);
-    this.swapiService.getPlanet(id).then(this.onPlanetLoad);
+    const id = Math.floor(Math.random() * 20 + 2);
+    this.swapiService
+      .getPlanet(id)
+      .then(this.onPlanetLoad)
+      .catch(this.onError);
   };
 
   render() {
-    const { id, name, population, rotationPeriod, diameter } = this.state;
+    const { planet, loading, error } = this.state;
+
+    const spinner = loading ? <Spinner /> : null;
+    const content = !loading && !error ? <PlanetView planet={planet} /> : null;
+    const errorMessage = error ? <ErrorIndicator /> : null;
     return (
       <div className="container">
-        <PlanetSection>
-          <div className="row start-sm">
-            <div className="col-xs-5 col-md-6 col-lg-5">
-              <PlanetImg
-                className="planet-image"
-                src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
-              />
-            </div>
-
-            <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-              <Heading>{name}</Heading>
-              <BaseList>
-                <li>
-                  <PlanetDataContainer>
-                    <PIheading>Population</PIheading>
-                    <div>{population}</div>
-                  </PlanetDataContainer>
-                </li>
-                <li>
-                  <PlanetDataContainer>
-                    <PIheading>Rotation Period</PIheading>
-                    <div>{rotationPeriod}</div>
-                  </PlanetDataContainer>
-                </li>
-                <li>
-                  <PlanetDataContainer>
-                    <PIheading>Diameter</PIheading>
-                    <div>{diameter}</div>
-                  </PlanetDataContainer>
-                </li>
-              </BaseList>
-            </div>
-          </div>
-        </PlanetSection>
+        <PlanetSection>{spinner || content || errorMessage}</PlanetSection>
       </div>
     );
   }
 }
+
+const PlanetView = ({ planet }) => {
+  const { id, name, population, rotationPeriod, diameter } = planet;
+  return (
+    <div className="row start-sm">
+      <div className="col-xs-5 col-md-6 col-lg-5">
+        <PlanetImg
+          className="planet-image"
+          src={`https://starwars-visualguide.com/assets/img/planets/${id}.jpg`}
+        />
+      </div>
+
+      <div className="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <Heading>{name}</Heading>
+        <BaseList>
+          <li>
+            <PlanetDataContainer>
+              <PIheading>Population</PIheading>
+              <div>{population}</div>
+            </PlanetDataContainer>
+          </li>
+          <li>
+            <PlanetDataContainer>
+              <PIheading>Rotation Period</PIheading>
+              <div>{rotationPeriod}</div>
+            </PlanetDataContainer>
+          </li>
+          <li>
+            <PlanetDataContainer>
+              <PIheading>Diameter</PIheading>
+              <div>{diameter}</div>
+            </PlanetDataContainer>
+          </li>
+        </BaseList>
+      </div>
+    </div>
+  );
+};
 
 export default RandomPlanet;
