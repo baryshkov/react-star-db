@@ -11,12 +11,13 @@ const Wrap = styled.section`
 
 class App extends Component {
   state = {
-    selectedPerson: null,
+    selectedPerson: 5,
   };
 
   onPersonSelected = id => {
     this.setState({ selectedPerson: id });
   };
+
   render() {
     return (
       <Wrap>

@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import BaseList from '../BaseList/BaseList';
+import SwapiService from '../../services/swapiService';
+import Spinner from '../Spinner';
 
 const PersonSection = styled.div`
   display: flex;
@@ -32,35 +34,77 @@ const InfoSpan = styled.span`
 `;
 
 class PersonDetails extends PureComponent {
-  render() {
-    return (
-      <PersonSection>
-        <PersonImg
-          className="person-image"
-          src="https://www.stickpng.com/assets/images/580b57fbd9996e24bc43bdb6.png"
-          alt="character"
-        />
+  swapiService = new SwapiService();
 
-        <div style={{ width: '100%' }}>
-          <Heading>R2-D2</Heading>
-          <List>
-            <li>
-              <span>Gender</span>
-              <InfoSpan>male</InfoSpan>
-            </li>
-            <li>
-              <span>Birth Year</span>
-              <InfoSpan>43</InfoSpan>
-            </li>
-            <li>
-              <span>Eye Color</span>
-              <InfoSpan>red</InfoSpan>
-            </li>
-          </List>
-        </div>
-      </PersonSection>
-    );
+  state = {
+    character: null,
+    loading: false,
+  };
+
+  updatePerson() {
+    const { personId } = this.props;
+    this.swapiService.getPerson(personId).then(character => {
+      this.setState({ character, loading: false });
+    });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.personId !== this.props.personId) {
+      this.setState({ loading: true });
+      this.updatePerson();
+    }
+  }
+
+  componentDidMount() {
+    this.updatePerson();
+  }
+
+  render() {
+    if (!this.state.character) {
+      return (
+        <PersonSection>
+          <span>Select a person from a list</span>
+        </PersonSection>
+      );
+    }
+
+    const { loading } = this.state;
+    const spinner = loading ? <Spinner /> : null;
+    const content = !loading ? <PersonCard character={this.state.character} /> : null;
+
+    return <PersonSection>{spinner || content}</PersonSection>;
   }
 }
+
+const PersonCard = ({ character }) => {
+  const { name, id, gender, birthYear, eyeColor } = character;
+  return (
+    <>
+      <PersonImg
+        className="person-image"
+        src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+        alt={`character ${name}`}
+      />
+
+      <div style={{ width: '100%' }}>
+        <Heading>{name}</Heading>
+        <List>
+          <li>
+            <span>Gender</span>
+            <InfoSpan>{gender}</InfoSpan>
+          </li>
+          <li>
+            <span>Birth Year</span>
+            <InfoSpan>{birthYear}</InfoSpan>
+          </li>
+          <li>
+            <span>Eye Color</span>
+            <InfoSpan>{eyeColor}</InfoSpan>
+          </li>
+        </List>
+      </div>
+    </>
+  );
+};
 
 export default PersonDetails;

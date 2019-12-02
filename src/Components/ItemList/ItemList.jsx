@@ -20,7 +20,6 @@ class ItemList extends Component {
   }
 
   renderItems = arr => {
-    console.log(this.props);
     return arr.map(({ id, name }) => (
       <li key={id} onClick={() => this.props.onItemSelected(id)}>
         {name}
