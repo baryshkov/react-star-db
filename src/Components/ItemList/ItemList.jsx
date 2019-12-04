@@ -8,29 +8,37 @@ const List = styled(BaseList)`
   width: auto;
 `;
 
-class ItemList extends Component {
-  swapiService = new SwapiService();
+const InfoSpan = styled.span`
+  padding-left: 1rem;
+  float: right;
+`;
 
+class ItemList extends Component {
   state = {
-    characters: null,
+    itemList: null,
   };
 
   componentDidMount() {
-    this.swapiService.getAllPeople().then(characters => this.setState({ characters }));
+    const { getData } = this.props;
+    getData().then(itemList => this.setState({ itemList }));
   }
 
   renderItems = arr => {
-    return arr.map(({ id, name }) => (
-      <li key={id} onClick={() => this.props.onItemSelected(id)}>
-        {name}
-      </li>
-    ));
+    return arr.map(item => {
+      const { id } = item;
+      const label = this.props.renderItem(item);
+      return (
+        <li key={id} onClick={() => this.props.onItemSelected(id)}>
+          {label}
+        </li>
+      );
+    });
   };
 
   render() {
-    const { characters } = this.state;
+    const { itemList } = this.state;
     let key = 2499;
-    return <List>{(characters && this.renderItems(characters)) || <Spinner />}</List>;
+    return <List>{(itemList && this.renderItems(itemList)) || <Spinner />}</List>;
   }
 }
 

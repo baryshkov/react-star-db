@@ -41,11 +41,8 @@ class PersonDetails extends PureComponent {
     loading: false,
   };
 
-  updatePerson() {
-    const { personId } = this.props;
-    this.swapiService.getPerson(personId).then(character => {
-      this.setState({ character, loading: false });
-    });
+  componentDidMount() {
+    this.updatePerson();
   }
 
   componentDidUpdate(prevProps) {
@@ -55,12 +52,16 @@ class PersonDetails extends PureComponent {
     }
   }
 
-  componentDidMount() {
-    this.updatePerson();
+  updatePerson() {
+    const { personId } = this.props;
+    this.swapiService.getPerson(personId).then(character => {
+      this.setState({ character, loading: false });
+    });
   }
 
   render() {
-    if (!this.state.character) {
+    const { character } = this.state;
+    if (!character) {
       return (
         <PersonSection>
           <span>Select a person from a list</span>
@@ -70,7 +71,7 @@ class PersonDetails extends PureComponent {
 
     const { loading } = this.state;
     const spinner = loading ? <Spinner /> : null;
-    const content = !loading ? <PersonCard character={this.state.character} /> : null;
+    const content = !loading ? <PersonCard character={character} /> : null;
 
     return <PersonSection>{spinner || content}</PersonSection>;
   }
