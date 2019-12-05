@@ -28,33 +28,40 @@ class App extends Component {
         <AppHeader />
         <RandomPlanet />
         <PeoplePage />
-        <div className="container">
-          <div className="row">
-            <div className="col-xs-12 col-md-6">
-              <ItemList
-                onItemSelected={this.onPersonSelected}
-                getData={this.swapiService.getAllPlanets}
-                renderItem={item => (<span>{item.name}<button>!</button></span>)}
-              />
-            </div>
-            <div className="col-xs-12 col-md-6">
-              <PersonDetails personId={this.state.selectedPerson} />
-            </div>
-          </div>
-        </div><div className="container">
-          <div className="row">
-            <div className="col-xs-12 col-md-6">
-              <ItemList
-                onItemSelected={this.onPersonSelected}
-                getData={this.swapiService.getAllStarships}
-                renderItem={item => item.name}
-              />
-            </div>
-            <div className="col-xs-12 col-md-6">
-              <PersonDetails personId={this.state.selectedPerson} />
-            </div>
-          </div>
-        </div>
+        {/*<div className="container">*/}
+        {/*  <div className="row">*/}
+        {/*//     <div className="col-xs-12 col-md-6">*/}
+        {/*//       <ItemList*/}
+        {/*//         onItemSelected={this.onPersonSelected}*/}
+        {/*        getData={this.swapiService.getAllPlanets}*/}
+        {/*      >*/}
+        {/*        {item => (*/}
+        {/*          <span>*/}
+        {/*            {item.name}*/}
+        {/*//             <button>!</button>*/}
+        {/*//           </span>)}*/}
+        {/*//       </ItemList>*/}
+        {/*    </div>*/}
+        {/*    <div className="col-xs-12 col-md-6">*/}
+        {/*      <PersonDetails personId={this.state.selectedPerson} />*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
+        {/*<div className="container">*/}
+        {/*  <div className="row">*/}
+        {/*    <div className="col-xs-12 col-md-6">*/}
+        {/*      <ItemList*/}
+        {/*        onItemSelected={this.onPersonSelected}*/}
+        {/*        getData={this.swapiService.getAllStarships}*/}
+        {/*      >*/}
+        {/*        {item => item.name}*/}
+        {/*      </ItemList>*/}
+        {/*    </div>*/}
+        {/*    <div className="col-xs-12 col-md-6">*/}
+        {/*      <PersonDetails personId={this.state.selectedPerson} />*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
       </Wrap>
     );
   }
