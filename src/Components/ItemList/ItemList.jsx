@@ -36,7 +36,6 @@ class ItemList extends Component {
 
   render() {
     const { itemList } = this.state;
-    let key = Math.random() * 2500 + 2;
     return <List>{(itemList && this.renderItems(itemList)) || <Spinner />}</List>;
   }
 }

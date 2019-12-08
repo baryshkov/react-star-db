@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import AppHeader from '../Header';
 import RandomPlanet from '../RandomPlanet';
 import ItemList from '../ItemList';
-import PersonDetails from '../PersonDetails/PersonDetails';
+import DetailsCard from '../PersonDetails/DetailsCard';
 import PeoplePage from '../PeoplePage';
+import Row from '../Row';
 import SwapiService from '../../services/swapiService';
 
 const Wrap = styled.section`
@@ -16,6 +17,7 @@ class App extends Component {
 
   state = {
     selectedPerson: 5,
+    showRandomPlanet: true,
   };
 
   onPersonSelected = id => {
@@ -23,11 +25,29 @@ class App extends Component {
   };
 
   render() {
+    const planet = this.state.showRandomPlanet ? <RandomPlanet /> : null;
+
+    const personDetails = (
+      <DetailsCard
+        itemId={11}
+        getCard={this.swapiService.getPerson}
+        getImgUrl={this.swapiService.getPersonImage}
+      />
+    );
+
+    const starshipDetails = (
+      <DetailsCard
+        itemId={5}
+        getCard={this.swapiService.getStarship}
+        getImgUrl={this.swapiService.getStarshipImage}
+      />
+    );
     return (
       <Wrap>
         <AppHeader />
-        <RandomPlanet />
-        <PeoplePage />
+        <Row left={personDetails} right={starshipDetails} />
+        {/*{planet}*/}
+        {/*<PeoplePage />*/}
         {/*<div className="container">*/}
         {/*  <div className="row">*/}
         {/*//     <div className="col-xs-12 col-md-6">*/}
@@ -43,7 +63,7 @@ class App extends Component {
         {/*//       </ItemList>*/}
         {/*    </div>*/}
         {/*    <div className="col-xs-12 col-md-6">*/}
-        {/*      <PersonDetails personId={this.state.selectedPerson} />*/}
+        {/*      <DetailsCard personId={this.state.selectedPerson} />*/}
         {/*    </div>*/}
         {/*  </div>*/}
         {/*</div>*/}
@@ -58,7 +78,7 @@ class App extends Component {
         {/*      </ItemList>*/}
         {/*    </div>*/}
         {/*    <div className="col-xs-12 col-md-6">*/}
-        {/*      <PersonDetails personId={this.state.selectedPerson} />*/}
+        {/*      <DetailsCard personId={this.state.selectedPerson} />*/}
         {/*    </div>*/}
         {/*  </div>*/}
         {/*</div>*/}

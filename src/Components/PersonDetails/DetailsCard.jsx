@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import BaseList from '../BaseList/BaseList';
-import SwapiService from '../../services/swapiService';
 import Spinner from '../Spinner';
 
 const PersonSection = styled.div`
@@ -33,35 +32,34 @@ const InfoSpan = styled.span`
   float: right;
 `;
 
-class PersonDetails extends PureComponent {
-  swapiService = new SwapiService();
-
+class DetailsCard extends PureComponent {
   state = {
-    character: null,
+    cardItem: null,
+    image: null,
     loading: false,
   };
 
   componentDidMount() {
-    this.updatePerson();
+    this.updateCard();
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.personId !== this.props.personId) {
+    if (prevProps.itemId !== this.props.itemId) {
       this.setState({ loading: true });
-      this.updatePerson();
+      this.updateCard();
     }
   }
 
-  updatePerson() {
-    const { personId } = this.props;
-    this.swapiService.getPerson(personId).then(character => {
-      this.setState({ character, loading: false });
+  updateCard() {
+    const { itemId, getCard, getImgUrl } = this.props;
+    getCard(itemId).then(cardItem => {
+      this.setState({ cardItem, image: getImgUrl(cardItem), loading: false });
     });
   }
 
   render() {
-    const { character } = this.state;
-    if (!character) {
+    const { cardItem, image } = this.state;
+    if (!cardItem) {
       return (
         <PersonSection>
           <span>Select a person from a list</span>
@@ -71,19 +69,19 @@ class PersonDetails extends PureComponent {
 
     const { loading } = this.state;
     const spinner = loading ? <Spinner /> : null;
-    const content = !loading ? <PersonCard character={character} /> : null;
+    const content = !loading ? <PersonCard cardItem={cardItem} image={image} /> : null;
 
     return <PersonSection>{spinner || content}</PersonSection>;
   }
 }
 
-const PersonCard = ({ character }) => {
-  const { name, id, gender, birthYear, eyeColor } = character;
+const PersonCard = ({ cardItem, image }) => {
+  const { name, id, gender, birthYear, eyeColor } = cardItem;
   return (
     <>
       <PersonImg
         className="person-image"
-        src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+        src={image}
         alt={`character ${name}`}
       />
 
@@ -108,4 +106,4 @@ const PersonCard = ({ character }) => {
   );
 };
 
-export default PersonDetails;
+export default DetailsCard;
