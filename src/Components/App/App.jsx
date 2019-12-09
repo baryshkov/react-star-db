@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import AppHeader from '../Header';
 import RandomPlanet from '../RandomPlanet';
 import ItemList from '../ItemList';
-import DetailsCard from '../PersonDetails/DetailsCard';
+import DetailsCard, { Record } from '../PersonDetails/DetailsCard';
 import PeoplePage from '../PeoplePage';
 import Row from '../Row';
 import SwapiService from '../../services/swapiService';
@@ -16,12 +16,7 @@ class App extends Component {
   swapiService = new SwapiService();
 
   state = {
-    selectedPerson: 5,
     showRandomPlanet: true,
-  };
-
-  onPersonSelected = id => {
-    this.setState({ selectedPerson: id });
   };
 
   render() {
@@ -32,22 +27,28 @@ class App extends Component {
         itemId={11}
         getCard={this.swapiService.getPerson}
         getImgUrl={this.swapiService.getPersonImage}
-      />
+      >
+        <Record field="gender" label="Gender" />
+        <Record field="eyeColor" label="Eye Color" />
+      </DetailsCard>
     );
 
     const starshipDetails = (
       <DetailsCard
-        itemId={5}
+        itemId={2}
         getCard={this.swapiService.getStarship}
         getImgUrl={this.swapiService.getStarshipImage}
-      />
+      >
+        <Record field="model" label="Model" />
+        <Record field="length" label="Length" />
+      </DetailsCard>
     );
     return (
       <Wrap>
         <AppHeader />
         <Row left={personDetails} right={starshipDetails} />
-        {/*{planet}*/}
-        {/*<PeoplePage />*/}
+        {planet}
+        <PeoplePage />
         {/*<div className="container">*/}
         {/*  <div className="row">*/}
         {/*//     <div className="col-xs-12 col-md-6">*/}

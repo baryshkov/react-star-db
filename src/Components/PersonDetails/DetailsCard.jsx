@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import BaseList from '../BaseList/BaseList';
@@ -32,11 +32,20 @@ const InfoSpan = styled.span`
   float: right;
 `;
 
-class DetailsCard extends PureComponent {
+const Record = ({ cardItem, field, label }) => {
+  return (
+    <li>
+      <span>{label}</span>
+      <InfoSpan>{cardItem[field]}</InfoSpan>
+    </li>
+  );
+};
+
+class DetailsCard extends Component {
   state = {
     cardItem: null,
     image: null,
-    loading: false,
+    loading: true,
   };
 
   componentDidMount() {
@@ -62,14 +71,29 @@ class DetailsCard extends PureComponent {
     if (!cardItem) {
       return (
         <PersonSection>
-          <span>Select a person from a list</span>
+          <span>Select an item from a list</span>
         </PersonSection>
       );
     }
+    const { id, name, gender, birthYear, eyeColor } = cardItem;
+    const personCard = (
+      <>
+        <PersonImg className="person-image" src={image} alt={`character ${cardItem.name}`} />
+
+        <div style={{ width: '100%' }}>
+          <Heading>{cardItem.name}</Heading>
+          <List>
+            {React.Children.map(this.props.children, child => {
+              return React.cloneElement(child, { cardItem });
+            })}
+          </List>
+        </div>
+      </>
+    );
 
     const { loading } = this.state;
     const spinner = loading ? <Spinner /> : null;
-    const content = !loading ? <PersonCard cardItem={cardItem} image={image} /> : null;
+    const content = !loading ? personCard : null;
 
     return <PersonSection>{spinner || content}</PersonSection>;
   }
@@ -79,31 +103,15 @@ const PersonCard = ({ cardItem, image }) => {
   const { name, id, gender, birthYear, eyeColor } = cardItem;
   return (
     <>
-      <PersonImg
-        className="person-image"
-        src={image}
-        alt={`character ${name}`}
-      />
+      <PersonImg className="person-image" src={image} alt={`character ${name}`} />
 
       <div style={{ width: '100%' }}>
         <Heading>{name}</Heading>
-        <List>
-          <li>
-            <span>Gender</span>
-            <InfoSpan>{gender}</InfoSpan>
-          </li>
-          <li>
-            <span>Birth Year</span>
-            <InfoSpan>{birthYear}</InfoSpan>
-          </li>
-          <li>
-            <span>Eye Color</span>
-            <InfoSpan>{eyeColor}</InfoSpan>
-          </li>
-        </List>
+        <List>{this.props.childen}</List>
       </div>
     </>
   );
 };
 
 export default DetailsCard;
+export { Record };

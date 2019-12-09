@@ -29,7 +29,11 @@ class PeoplePage extends Component {
       </ItemList>
     );
     const personDetails = (
-      <DetailsCard itemId={this.state.selectedItem} getCard={this.swapiService.getPerson} />
+      <DetailsCard
+        itemId={this.state.selectedItem}
+        getCard={this.swapiService.getPerson}
+        getImgUrl={this.swapiService.getPersonImage}
+      />
     );
 
     return (
