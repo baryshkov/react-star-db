@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import BaseList from '../BaseList/BaseList';
-import Spinner from '../Spinner';
 
 const List = styled(BaseList)`
   width: auto;
@@ -12,32 +11,20 @@ const InfoSpan = styled.span`
   float: right;
 `;
 
-class ItemList extends Component {
-  state = {
-    itemList: null,
-  };
+const ItemList = props => {
+  const { data, onItemSelected, children: renderLabel } = props;
 
-  componentDidMount() {
-    const { getData } = this.props;
-    getData().then(itemList => this.setState({ itemList }));
-  }
+  const items = data.map(item => {
+    const { id } = item;
+    const label = renderLabel(item);
+    return (
+      <li key={id} onClick={() => onItemSelected(id)}>
+        {label}
+      </li>
+    );
+  });
 
-  renderItems = arr => {
-    return arr.map(item => {
-      const { id } = item;
-      const label = this.props.children(item);
-      return (
-        <li key={id} onClick={() => this.props.onItemSelected(id)}>
-          {label}
-        </li>
-      );
-    });
-  };
-
-  render() {
-    const { itemList } = this.state;
-    return <List>{(itemList && this.renderItems(itemList)) || <Spinner />}</List>;
-  }
-}
+  return <List>{items}</List>;
+};
 
 export default ItemList;

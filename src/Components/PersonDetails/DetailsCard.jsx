@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import BaseList from '../BaseList/BaseList';
 import Spinner from '../Spinner';
 
-const PersonSection = styled.div`
+const Card = styled.div`
   display: flex;
   background-color: #5a5a5a;
   border-radius: 3px;
@@ -70,12 +69,11 @@ class DetailsCard extends Component {
     const { cardItem, image } = this.state;
     if (!cardItem) {
       return (
-        <PersonSection>
+        <Card>
           <span>Select an item from a list</span>
-        </PersonSection>
+        </Card>
       );
     }
-    const { id, name, gender, birthYear, eyeColor } = cardItem;
     const personCard = (
       <>
         <PersonImg className="person-image" src={image} alt={`character ${cardItem.name}`} />
@@ -95,7 +93,7 @@ class DetailsCard extends Component {
     const spinner = loading ? <Spinner /> : null;
     const content = !loading ? personCard : null;
 
-    return <PersonSection>{spinner || content}</PersonSection>;
+    return <Card>{spinner || content}</Card>;
   }
 }
 
