@@ -20,7 +20,6 @@ const renderModelAndName = ({ name, model }) => (
   </span>
 );
 
-const ListWithChildren = withChildFunctions(ItemList);
 
 const PersonList = withData(withChildFunctions(ItemList, renderName), getAllPeople);
 const PlanetList = withData(withChildFunctions(ItemList, renderName), getAllPlanets);

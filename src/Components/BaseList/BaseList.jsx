@@ -18,7 +18,7 @@ const BaseList = styled.ul`
   li:not(:last-of-type) {
     border-bottom: 1px solid gray;
   }
-  
+
   li:not(:last-of-type) {
     // margin-bottom: 0.4rem;
   }

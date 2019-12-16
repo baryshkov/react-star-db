@@ -70,7 +70,6 @@ export default class SwapiService {
   };
 
   _transformStarship = starship => {
-    console.log(starship.cost_in_credits);
     return {
       id: this._extractId(starship),
       name: starship.name,
