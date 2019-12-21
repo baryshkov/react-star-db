@@ -97,19 +97,5 @@ class DetailsCard extends Component {
   }
 }
 
-const PersonCard = ({ cardItem, image }) => {
-  const { name, id, gender, birthYear, eyeColor } = cardItem;
-  return (
-    <>
-      <PersonImg className="person-image" src={image} alt={`character ${name}`} />
-
-      <div style={{ width: '100%' }}>
-        <Heading>{name}</Heading>
-        <List>{this.props.childen}</List>
-      </div>
-    </>
-  );
-};
-
 export default DetailsCard;
 export { Record };

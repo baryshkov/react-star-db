@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NavBar = styled.ul`
@@ -7,7 +8,7 @@ const NavBar = styled.ul`
   padding-left: 0;
 `;
 
-const NavLink = styled.a`
+const NavLink = styled(Link)`
   margin-left: 0.5rem;
   padding: 0.5rem;
   color: green;
@@ -20,22 +21,29 @@ const NavLink = styled.a`
   }
 `;
 
+const HomepageLink = styled(NavLink)`
+  color: white;
+  font-size: 2rem;
+`;
+
 const AppHeader = () => {
   return (
     <div className="row between-sm container">
       <div className="col-xs-12 col-sm-4 col-md-3">
-        <h1>Star DB</h1>
+        <h1>
+          <HomepageLink to="/">Star DB</HomepageLink>
+        </h1>
       </div>
       <nav className="col-xs-12 col-sm-8 col-md-6 col-lg-4 row">
         <NavBar className="row">
           <li>
-            <NavLink href="#">People</NavLink>
+            <NavLink to="/people">People</NavLink>
           </li>
           <li>
-            <NavLink href="#">Planets</NavLink>
+            <NavLink to="/planets">Planets</NavLink>
           </li>
           <li>
-            <NavLink href="#">Starships</NavLink>
+            <NavLink to="/starships">Starships</NavLink>
           </li>
         </NavBar>
       </nav>

@@ -23,7 +23,7 @@ export default class SwapiService {
 
   getAllPlanets = async () => {
     const res = await this.getResource(`/planets/`);
-    return res.results;
+    return res.results.map(this._transformPlanet);
   };
 
   getPlanet = async id => {
@@ -59,9 +59,8 @@ export default class SwapiService {
   };
 
   _transformPlanet = planet => {
-    const id = this._extractId(planet);
     return {
-      id,
+      id: this._extractId(planet),
       name: planet.name,
       population: planet.population,
       rotationPeriod: planet.rotation_period,
