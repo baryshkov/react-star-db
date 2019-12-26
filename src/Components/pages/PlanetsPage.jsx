@@ -10,7 +10,6 @@ class PlanetsPage extends Component {
   };
 
   onItemSelected = id => {
-    console.log(id);
     this.setState({ selectedItem: id });
   };
 

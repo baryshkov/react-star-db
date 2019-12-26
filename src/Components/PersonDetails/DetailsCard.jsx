@@ -48,7 +48,9 @@ class DetailsCard extends Component {
   };
 
   componentDidMount() {
-    this.updateCard();
+    if (this.props.itemId !== undefined) {
+      this.updateCard();
+    }
   }
 
   componentDidUpdate(prevProps) {

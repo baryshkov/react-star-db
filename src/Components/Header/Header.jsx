@@ -37,13 +37,13 @@ const AppHeader = () => {
       <nav className="col-xs-12 col-sm-8 col-md-6 col-lg-4 row">
         <NavBar className="row">
           <li>
-            <NavLink to="/people">People</NavLink>
+            <NavLink to="/people/">People</NavLink>
           </li>
           <li>
-            <NavLink to="/planets">Planets</NavLink>
+            <NavLink to="/planets/">Planets</NavLink>
           </li>
           <li>
-            <NavLink to="/starships">Starships</NavLink>
+            <NavLink to="/starships/">Starships</NavLink>
           </li>
         </NavBar>
       </nav>

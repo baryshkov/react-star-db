@@ -1,29 +1,20 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import ErrorBoundry from '../ErrorBoundry';
-import { StarshipList, StarshipDetails } from '../ViewComponents';
-import Row from '../Row';
+import { StarshipList } from '../ViewComponents';
+import { withRouter } from 'react-router-dom';
 
-class StarshipsPage extends Component {
-  state = {
-    selectedItem: 9,
-  };
+const StarshipsPage = ({ match, history }) => {
+  return (
+    <ErrorBoundry>
+      <StarshipList
+        onItemSelected={itemId => {
+          history.push(itemId);
+        }}
+      />
+    </ErrorBoundry>
+  );
+};
 
-  onItemSelected = id => {
-    this.setState({ selectedItem: id });
-  };
+export default withRouter(StarshipsPage);
 
-  render() {
-    const { selectedItem } = this.state;
-    return (
-      <ErrorBoundry>
-        <Row
-          left={<StarshipList onItemSelected={this.onItemSelected} />}
-          right={<StarshipDetails itemId={selectedItem} />}
-        />
-      </ErrorBoundry>
-    );
-  }
-}
 
-export default StarshipsPage;
